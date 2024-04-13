@@ -1,0 +1,7 @@
+default:
+  @just --list
+
+test: test-python
+
+test-python:
+  python eval/evaluate.py --data_path=trees/data/ --dir_path=trees/python/
