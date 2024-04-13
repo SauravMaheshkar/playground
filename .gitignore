@@ -2,5 +2,8 @@
 *.o
 *.out
 
+# Python Generated Files
+**/__pycache__/
+
 # Nix Generated Files
 **/result
