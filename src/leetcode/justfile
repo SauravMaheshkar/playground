@@ -1,7 +1,10 @@
 default:
   @just --list
 
-test: test-python
+test: test-python test-c
 
 test-python:
   python eval/evaluate.py --data_path=trees/data/ --dir_path=trees/python/
+
+test-c:
+  eval/evaluate.c.sh trees/data trees/c
