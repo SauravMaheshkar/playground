@@ -2,7 +2,8 @@
 *.o
 *.out
 
-# Python Generated Files
+# Python Related Files
+.ruff_cache/
 **/__pycache__/
 
 # Nix Generated Files
