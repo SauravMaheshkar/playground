@@ -35,6 +35,8 @@
             packages = with pkgs;
               [
                 uv
+                ruff
+                mypy
               ];
           };
       });

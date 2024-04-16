@@ -68,7 +68,9 @@ def test_functions(
             if not isinstance(func_output, (int, bool)):
                 func_output = helper.destructor(func_output)
             truth = test_case[-1]
-            assert func_output == truth, f"""error in problem no.{problem}:
+            assert (
+                func_output == truth
+            ), f"""error in problem no.{problem}:
                 Test Case: {test_case[0]}
                 Got: {func_output}
                 Expected: {truth}"""
