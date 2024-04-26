@@ -1,10 +1,13 @@
 default:
   @just --list
 
-test: test-python test-c
+test: test-python test-c test-cpp
 
 test-python:
   python eval/evaluate.py --data_path=trees/data/ --dir_path=trees/python/
 
 test-c:
   eval/evaluate.c.sh trees/data trees/c
+
+test-cpp:
+  eval/evaluate.cpp.sh trees/data trees/cpp
