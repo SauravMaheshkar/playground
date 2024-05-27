@@ -1,7 +1,7 @@
 default:
   @just --list
 
-test: test-python test-c test-cpp
+test: test-python test-c test-cpp test-rust
 
 test-python:
   python eval/evaluate.py --data_path=trees/data/ --dir_path=trees/python/
@@ -11,3 +11,6 @@ test-c:
 
 test-cpp:
   eval/evaluate.cpp.sh trees/data trees/cpp
+
+test-rust:
+  eval/evaluate.rust.sh trees/data trees/rust
