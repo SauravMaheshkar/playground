@@ -1,0 +1,33 @@
+name: "Leetcode Rust Tests"
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "src/leetcode/**/python"
+      - "src/leetcode/eval/evaluate.rush.sh"
+      - ".github/workflows/leetcode-rust-tests.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "src/leetcode/**/rust"
+      - "src/leetcode/eval/evaluate.rust.sh"
+      - ".github/workflows/leetcode-rust-tests.yml"
+  release:
+    types: [created]
+  schedule:
+    - cron: "0 0 * * 0"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - run: sudo snap install --edge --classic just
+
+      - name: Run Leetcode Rust Tests
+        run: cd src/leetcode/ && just test-rust
