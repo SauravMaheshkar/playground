@@ -1,0 +1,21 @@
+cabal-version:      3.0
+name:               trees
+version:            0.0.1
+synopsis:           Algorithms + Data Structures + Leetcode + Niche Languages
+homepage:           https://github.com/SauravMaheshkar/playground
+license:            MIT
+author:             Saurav Maheshkar
+maintainer:         sauravvmaheshkar@gmail.com
+category:           Development
+build-type:         Simple
+
+common warnings
+    ghc-options: -Wall
+
+executable trees-exe
+    main-is:          Main.hs
+    default-extensions: ViewPatterns
+    other-modules: Eval, Solution100, Solution104, Solution110, Solution226, Solution543, Solution572
+    hs-source-dirs:   src
+    build-depends:    base ^>=4.18.2.1, aeson, bytestring, containers ^>=0.6.7, vector
+    default-language: Haskell2010
