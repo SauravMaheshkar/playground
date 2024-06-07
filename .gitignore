@@ -2,6 +2,9 @@
 *.o
 *.out
 
+# Haskell Related Files
+dist-*
+
 # Python Related Files
 .ruff_cache/
 **/__pycache__/
