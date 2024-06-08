@@ -1,4 +1,4 @@
--- src/Eval.hs
+-- src/eval.hs
 module Eval (Tree (EmptyTree, Branch), constructTree, parseJSONFile) where
 
 import Data.Aeson (FromJSON(..), Value(..), eitherDecode, withArray)
