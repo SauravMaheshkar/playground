@@ -13,7 +13,7 @@ test-cpp:
   eval/evaluate.cpp.sh trees/data trees/cpp
 
 test-haskell:
-  eval/evaluate.hs.sh trees/data trees/haskell
+  eval/evaluate.hs.sh trees/data trees/haskell trees-exe
 
 test-rust:
   eval/evaluate.rust.sh trees/data trees/rust

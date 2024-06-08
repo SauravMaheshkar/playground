@@ -1,4 +1,4 @@
--- src/Solution543.hs
+-- src/solution543.hs
 module Solution543 (testDiameter) where
 
 import Control.Monad (forM)

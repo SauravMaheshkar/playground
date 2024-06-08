@@ -1,4 +1,4 @@
--- src/Solution110.hs
+-- src/solution110.hs
 module Solution110 (testBalanced) where
 
 import Control.Monad (forM)

@@ -1,4 +1,4 @@
--- src/Solution104.hs
+-- src/solution104.hs
 module Solution104 (testMaximumDepth) where
 
 import Control.Monad (forM)

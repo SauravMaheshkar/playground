@@ -1,4 +1,4 @@
--- src/Solution226.hs
+-- src/solution226.hs
 module Solution226 (testInvertTree) where
 
 import Control.Monad (forM)
