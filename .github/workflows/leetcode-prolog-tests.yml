@@ -6,13 +6,13 @@ on:
     branches: [main]
     paths:
       - "src/leetcode/**/prolog"
-      - "src/leetcode/eval/evaluate.pro.sh"
+      - "src/leetcode/bin/evaluate.pro.sh"
       - ".github/workflows/leetcode-prolog-tests.yml"
   pull_request:
     branches: [main]
     paths:
       - "src/leetcode/**/prolog"
-      - "src/leetcode/eval/evaluate.pro.sh"
+      - "src/leetcode/bin/evaluate.pro.sh"
       - ".github/workflows/leetcode-prolog-tests.yml"
   release:
     types: [created]

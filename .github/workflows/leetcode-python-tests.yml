@@ -6,13 +6,13 @@ on:
     branches: [main]
     paths:
       - "src/leetcode/**/python"
-      - "src/leetcode/eval/evaluate.py"
+      - "src/leetcode/bin/evaluate.py"
       - ".github/workflows/leetcode-python-tests.yml"
   pull_request:
     branches: [main]
     paths:
       - "src/leetcode/**/python"
-      - "src/leetcode/eval/evaluate.py"
+      - "src/leetcode/bin/evaluate.py"
       - ".github/workflows/leetcode-python-tests.yml"
   release:
     types: [created]

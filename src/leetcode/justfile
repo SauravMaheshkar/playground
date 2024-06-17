@@ -4,19 +4,19 @@ default:
 test: test-python test-c test-cpp test-haskell test-prolog test-rust
 
 test-python:
-  python eval/evaluate.py --data_path=trees/data/ --dir_path=trees/python/
+  python bin/evaluate.py --data_path=trees/data/ --dir_path=trees/python/
 
 test-c:
-  eval/evaluate.c.sh trees/data trees/c
+  bin/evaluate.c.sh trees/data trees/c
 
 test-cpp:
-  eval/evaluate.cpp.sh trees/data trees/cpp
+  bin/evaluate.cpp.sh trees/data trees/cpp
 
 test-haskell:
-  eval/evaluate.hs.sh trees/data trees/haskell trees-exe
+  bin/evaluate.hs.sh trees/data trees/haskell trees-exe
 
 test-prolog:
-  eval/evaluate.pro.sh trees/prolog
+  bin/evaluate.pro.sh trees/prolog
 
 test-rust:
-  eval/evaluate.rust.sh trees/data trees/rust
+  bin/evaluate.rust.sh trees/data trees/rust
