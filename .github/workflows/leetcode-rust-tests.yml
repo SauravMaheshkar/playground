@@ -29,5 +29,11 @@ jobs:
 
       - run: sudo snap install --edge --classic just
 
+      - name: cache cargo
+        uses: actions/cache@v4
+        with:
+          path: ~/.cargo
+          key: ${{ runner.os }}-{{ hashFiles('**/Cargo.lock') }}
+
       - name: Run Leetcode Rust Tests
         run: cd src/leetcode/ && just test-rust
