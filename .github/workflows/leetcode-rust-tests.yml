@@ -6,13 +6,13 @@ on:
     branches: [main]
     paths:
       - "src/leetcode/**/rust"
-      - "src/leetcode/eval/evaluate.rush.sh"
+      - "src/leetcode/bin/evaluate.rush.sh"
       - ".github/workflows/leetcode-rust-tests.yml"
   pull_request:
     branches: [main]
     paths:
       - "src/leetcode/**/rust"
-      - "src/leetcode/eval/evaluate.rust.sh"
+      - "src/leetcode/bin/evaluate.rust.sh"
       - ".github/workflows/leetcode-rust-tests.yml"
   release:
     types: [created]
