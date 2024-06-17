@@ -5,7 +5,7 @@ on:
   push:
     branches: [main]
     paths:
-      - "src/leetcode/**/python"
+      - "src/leetcode/**/rust"
       - "src/leetcode/eval/evaluate.rush.sh"
       - ".github/workflows/leetcode-rust-tests.yml"
   pull_request:
