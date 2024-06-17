@@ -21,5 +21,7 @@ for file in "$dir_path"/*.pro; do
 		if [ -n "$result" ]; then
 			echo "Failing for: $file"
 		fi
+
+		echo "Tests ran successfully for $file"
 	fi
 done
