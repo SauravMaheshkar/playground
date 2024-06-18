@@ -31,8 +31,7 @@ jobs:
         with:
           ghc-version: '9.6.5'
 
-      - name: Install just
-        run: sudo snap install --edge --classic just
+      - uses: extractions/setup-just@v2
 
       - name: Run Leetcode Haskell Tests
         run: cd src/leetcode/ && just test-haskell
