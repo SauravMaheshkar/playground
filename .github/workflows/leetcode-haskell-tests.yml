@@ -1,0 +1,38 @@
+name: "Leetcode Haskell Tests"
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "src/leetcode/**/haskell"
+      - "src/leetcode/bin/evaluate.hs.sh"
+      - ".github/workflows/leetcode-haskell-tests.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "src/leetcode/**/haskell"
+      - "src/leetcode/bin/evaluate.hs.sh"
+      - ".github/workflows/leetcode-haskell-tests.yml"
+  release:
+    types: [created]
+  schedule:
+    - cron: "0 0 * * 0"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - uses: haskell-actions/setup@v2
+        with:
+          ghc-version: '9.6.5'
+
+      - name: Install just
+        run: sudo snap install --edge --classic just
+
+      - name: Run Leetcode Haskell Tests
+        run: cd src/leetcode/ && just test-haskell
