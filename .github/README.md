@@ -5,7 +5,7 @@
 * [`templates/python`](../templates/python/flake.nix): Basic devShell with py3.10, [uv](https://github.com/astral-sh/uv), [mypy](https://github.com/python/mypy) and [ruff](https://github.com/astral-sh/ruff)
 * [`templates/rust`](../templates/rust/flake.nix): Basic devShell with [rustToolchain](https://rust-lang.github.io/rustup/concepts/toolchains.html) and [rust-analyser](https://rust-analyzer.github.io/)
 
-## Data Structures / Algorithms
+# Data Structures / Algorithms
 Implementations of various leetcode problems in (C/C++/Haskell/Prolog/Python/Rust) with automated testing using CI/CD. (atm I'm working on the [Neetcode Blind 75](https://neetcode.io/practice))
 
 <details>
