@@ -1,8 +1,0 @@
-name: quadtree
-version: 0.0.1
-dependencies:
-  - base
-executables:
-  quadtree:
-    main: Main.hs
-    source-dirs: .

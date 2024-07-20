@@ -1,0 +1,40 @@
+name: "Leetcode C/C++ Tests"
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "src/leetcode/**/c"
+      - "src/leetcode/**/cpp"
+      - "src/leetcode/bin/evaluate.c.sh"
+      - "src/leetcode/bin/evaluate.cpp.sh"
+      - ".github/workflows/leetcode-c-tests.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "src/leetcode/**/c"
+      - "src/leetcode/**/cpp"
+      - "src/leetcode/bin/evaluate.c.sh"
+      - "src/leetcode/bin/evaluate.cpp.sh"
+      - ".github/workflows/leetcode-c-tests.yml"
+  release:
+    types: [created]
+  schedule:
+    - cron: "0 0 * * 0"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - run: sudo snap install --edge --classic just
+
+      - name: Run Leetcode C Tests
+        run: cd src/leetcode/ && chmod +x bin/evaluate.c.sh && just test-c
+
+      - name: Run Leetcode C++ Tests
+        run: cd src/leetcode/ && chmod +x bin/evaluate.cpp.sh && just test-cpp

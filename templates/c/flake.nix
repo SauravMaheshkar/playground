@@ -1,10 +1,12 @@
 {
-  description = "A Nix-flake-based Haskell development environment";
+  description = "Nix flake for a C development environment";
 
+  # Flake inputs
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
   };
 
+  # Flake outputs
   outputs = { self, nixpkgs }:
     let
       # Systems supported
@@ -21,11 +23,16 @@
       });
     in
     {
-      packages = forAllSystems ({ pkgs }: {
-        default = pkgs.haskellPackages.developPackage {
-          name = "quadtree";
-          root = ./.;
-        };
+      # Development environment output
+      devShells = forAllSystems ({ pkgs }: {
+        default =
+          pkgs.mkShell {
+            # The Nix packages provided in the environment
+            packages = with pkgs;
+              [
+                gdb
+              ];
+          };
       });
     };
 }

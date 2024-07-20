@@ -1,0 +1,22 @@
+default:
+  @just --list
+
+test: test-python test-c test-cpp test-haskell test-prolog test-rust
+
+test-python:
+  python bin/evaluate.py --data_path=trees/data/ --dir_path=trees/python/
+
+test-c:
+  bin/evaluate.c.sh trees/data trees/c
+
+test-cpp:
+  bin/evaluate.cpp.sh trees/data trees/cpp
+
+test-haskell:
+  bin/evaluate.hs.sh trees/data trees/haskell trees-exe
+
+test-prolog:
+  bin/evaluate.pro.sh trees/prolog
+
+test-rust:
+  bin/evaluate.rust.sh trees/data trees/rust

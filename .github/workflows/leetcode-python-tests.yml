@@ -1,0 +1,33 @@
+name: "Leetcode Python Tests"
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "src/leetcode/**/python"
+      - "src/leetcode/bin/evaluate.py"
+      - ".github/workflows/leetcode-python-tests.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "src/leetcode/**/python"
+      - "src/leetcode/bin/evaluate.py"
+      - ".github/workflows/leetcode-python-tests.yml"
+  release:
+    types: [created]
+  schedule:
+    - cron: "0 0 * * 0"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - run: sudo snap install --edge --classic just
+
+      - name: Run Leetcode Python Tests
+        run: cd src/leetcode/ && just test-python
