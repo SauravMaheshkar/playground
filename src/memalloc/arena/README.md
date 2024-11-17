@@ -1,6 +1,6 @@
 # `arena.c`
 
-C library for Arena based memory management, for example usage refer to `bin/examples/`
+C library for Arena based memory management, for example usage refer to `src/memalloc/arena/example.c`
 
 ### Resources
 
