@@ -1,12 +1,11 @@
 #!/usr/bin/env python
 
-import os
-import json
-import os.path as osp
-import importlib.util
 import argparse
-
-from typing import Dict, Callable, List, Any, TypeAlias
+import importlib.util
+import json
+import os
+import os.path as osp
+from typing import Any, Callable, Dict, List, TypeAlias
 
 DatasetType: TypeAlias = List[List[Any]]
 
@@ -68,9 +67,7 @@ def test_functions(
             if not isinstance(func_output, (int, bool)):
                 func_output = helper.destructor(func_output)
             truth = test_case[-1]
-            assert (
-                func_output == truth
-            ), f"""error in problem no.{problem}:
+            assert func_output == truth, f"""error in problem no.{problem}:
                 Test Case: {test_case[0]}
                 Got: {func_output}
                 Expected: {truth}"""
@@ -82,7 +79,7 @@ if __name__ == "__main__":
         "--data_path",
         type=str,
         default="data/",
-        help="path to the data directory, should contain csv files starting with leetcode problem number",
+        help="path to the data directory, should contain json files starting with leetcode problem number",
     )
     parser.add_argument(
         "--dir_path",
