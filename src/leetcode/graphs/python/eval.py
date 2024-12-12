@@ -10,3 +10,9 @@ class Helper:
             return None
 
         return data
+
+    def destructor(self, data: List[List[int]]) -> List[List[int]]:
+        if not data:
+            return None
+
+        return data
