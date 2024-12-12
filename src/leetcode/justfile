@@ -5,6 +5,7 @@ test: test-python test-c test-cpp test-haskell test-prolog test-rust
 
 test-python:
   python bin/evaluate.py --data_path=trees/data/ --dir_path=trees/python/
+  python bin/evaluate.py --data_path=graphs/data/ --dir_path=graphs/python/
 
 test-c:
   bin/evaluate.c.sh trees/data trees/c
