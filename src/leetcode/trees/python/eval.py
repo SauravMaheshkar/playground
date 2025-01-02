@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
-from typing import List
 from collections import deque
+from typing import List, Optional
 
 
 class Node:
@@ -37,7 +37,7 @@ class Helper:
                 queue.append(node.left)
                 queue.append(node.right)
 
-    def destructor(self, root: Node) -> List[int]:
+    def destructor(self, root: Optional[Node]) -> List[int]:
         if not root:
             return []
 
