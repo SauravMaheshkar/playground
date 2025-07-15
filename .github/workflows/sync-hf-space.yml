@@ -9,6 +9,7 @@ on:
     branches: [main]
     paths:
       - "src/papersai/ui/local.py"
+  workflow_dispatch:
 
 jobs:
   sync-file:
