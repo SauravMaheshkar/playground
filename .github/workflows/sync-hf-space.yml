@@ -1,0 +1,43 @@
+name: "Sync Local App to HF"
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "src/papersai/ui/local.py"
+  pull_request:
+    branches: [main]
+    paths:
+      - "src/papersai/ui/local.py"
+
+jobs:
+  sync-file:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Should sync?
+        id: check
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          mkdir tmp
+          git clone --depth 1 https://huggingface.co/spaces/SauravMaheshkar/papersai tmp/
+          if cmp -s "src/papersai/ui/local.py" "tmp/local.py"; then
+            echo "status=synced" >> $GITHUB_OUTPUT
+          else
+            echo "status=needs_sync" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Push file to HF
+        if: steps.check.outputs.status == 'needs_sync'
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          cd tmp/
+          cp ../src/papersai/ui/local.py ./
+          git add .
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git commit -m "gh: sync"
+          git push https://SauravMaheshkar:$HF_TOKEN@huggingface.co/spaces/SauravMaheshkar/papersai main
