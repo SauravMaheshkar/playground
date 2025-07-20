@@ -1,12 +1,13 @@
 import os
 import sys
 
-from papersai.cli.utils import init_parser
-from papersai.engine import Chat
-from papersai.utils import load_paper_as_context
 from rich.console import Console
 from rich.panel import Panel
 from rich.prompt import Prompt
+
+from papersai.cli.utils import init_parser
+from papersai.engine import Chat
+from papersai.utils import load_paper_as_context
 
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"

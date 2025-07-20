@@ -3,13 +3,14 @@ from datetime import datetime, timedelta
 from typing import Dict, List
 
 import requests
-from papersai.cli.utils import init_parser
-from papersai.engine import Chat, Summarizer
-from papersai.utils import load_paper_as_context
 from rich.console import Console
 from rich.panel import Panel
 from rich.progress import Progress
 from rich.prompt import Confirm, Prompt
+
+from papersai.cli.utils import init_parser
+from papersai.engine import Chat, Summarizer
+from papersai.utils import load_paper_as_context
 
 
 DAILY_PAPERS_ENDPOINT: str = "https://huggingface.co/api/daily_papers"

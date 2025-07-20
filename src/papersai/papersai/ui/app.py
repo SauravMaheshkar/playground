@@ -3,24 +3,18 @@ import time
 from typing import Dict, List, Optional, TypeAlias
 
 import gradio as gr
-import torch
 import weave
-from papersai.utils import load_paper_as_context
-from transformers import pipeline
+from litellm import completion
+
+from papersai import Summarizer, load_paper_as_context
 
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 HistoryType: TypeAlias = List[Dict[str, str]]
 
-# Initialize the LLM and Weave client
+# Initialize the Weave client
 client = weave.init("papersai")
-checkpoint: str = "HuggingFaceTB/SmolLM2-135M-Instruct"
-pipe = pipeline(
-    model=checkpoint,
-    torch_dtype=torch.bfloat16,
-    device_map="auto",
-)
 
 
 class ChatState:
@@ -29,6 +23,23 @@ class ChatState:
     def __init__(self):
         self.context = None
         self.last_response = None
+
+
+def summarize_paper(paper_id: str) -> str:
+    """
+    Summarize the paper with the given arxiv ID.
+
+    Args:
+        paper_id (str): arxiv paper ID
+
+    Returns:
+        str: summarized text from the paper
+    """
+    gr.Info("Downloading paper...")
+    context = load_paper_as_context(paper_id=paper_id)
+    gr.Info("Summarizing ...")
+    summary = Summarizer(model="claude-3-5-sonnet-20240620").summarize(context=context)
+    return gr.Textbox(value=summary, visible=True)
 
 
 def record_feedback(x: gr.LikeData) -> None:
@@ -68,14 +79,7 @@ def invoke(history: HistoryType):
     Returns:
         BaseMessage: Response from the model
     """
-    input_text = pipe.tokenizer.apply_chat_template(
-        history,
-        tokenize=False,
-    )
-    response = pipe(input_text, do_sample=True, top_p=0.95, max_new_tokens=100)[0][
-        "generated_text"
-    ]
-    response = response.split("\nassistant\n")[-1]
+    response = completion(model="claude-3-5-sonnet-20240620", messages=history)
     return response
 
 
@@ -101,11 +105,7 @@ def update_state(history: HistoryType, message: Optional[Dict[str, str]]):
     if isinstance(message, dict) and "files" in message:
         for file_path in message["files"]:
             try:
-                text = load_paper_as_context(file_path=file_path)
-                doc_context = [x.get_content() for x in text]
-                state.context = " ".join(doc_context)[
-                    : pipe.model.config.max_position_embeddings
-                ]
+                state.context = load_paper_as_context(file_path=file_path)
                 history.append(
                     {"role": "system", "content": f"Context: {state.context}\n"}
                 )
@@ -143,7 +143,7 @@ def bot(history: HistoryType):
         history.append({"role": "assistant", "content": ""})
 
         # Stream the response
-        for character in response:
+        for character in response.choices[0].message.content:
             history[-1]["content"] += character
             time.sleep(0.02)
             yield history
@@ -155,46 +155,69 @@ def bot(history: HistoryType):
 
 def create_interface():
     with gr.Blocks() as demo:
-        global state
-        state = ChatState()
         gr.Markdown(
             """
-            <a href="https://github.com/SauravMaheshkar/papersai">
-                <div align="center"><h1>papers.ai</h1></div>
-            </a>
-            """,
-        )
-        chatbot = gr.Chatbot(
-            show_label=False,
-            height=600,
-            type="messages",
-            show_copy_all_button=True,
-            placeholder="Upload a research paper and ask questions!!",
+                <a href="https://github.com/SauravMaheshkar/papersai">
+                    <div align="center"><h1>papers.ai</h1></div>
+                </a>
+                """,
         )
 
-        chat_input = gr.MultimodalTextbox(
-            interactive=True,
-            file_count="single",
-            placeholder="Upload a document or type your message...",
-            show_label=False,
-        )
+        with gr.Tab("Summary"):
+            input_id = gr.Textbox(
+                label="Paper ID",
+                placeholder="Enter the arxiv paper ID",
+            )
+            output_summary = gr.Textbox(
+                label="Summary",
+                placeholder="Summary will be displayed here",
+                visible=False,
+            )
+            btn = gr.Button(
+                value="Summarize",
+                variant="primary",
+            )
+            btn.click(
+                fn=summarize_paper,
+                inputs=[input_id],
+                outputs=[output_summary],
+            )
 
-        chat_msg = chat_input.submit(
-            fn=update_state,
-            inputs=[chatbot, chat_input],
-            outputs=[chatbot, chat_input],
-        )
+        with gr.Tab("Chat"):
+            global state
+            state = ChatState()
+            chatbot = gr.Chatbot(
+                show_label=False,
+                height=600,
+                type="messages",
+                show_copy_all_button=True,
+                placeholder="Upload a research paper and ask questions!!",
+            )
 
-        bot_msg = chat_msg.then(  # noqa: F841
-            fn=bot, inputs=[chatbot], outputs=chatbot, api_name="bot_response"
-        )
+            chat_input = gr.MultimodalTextbox(
+                interactive=True,
+                file_count="single",
+                placeholder="Upload a document or type your message...",
+                show_label=False,
+                stop_btn=True,
+            )
 
-        chatbot.like(
-            fn=record_feedback,
-            inputs=None,
-            outputs=None,
-            like_user_message=True,
-        )
+            chat_msg = chat_input.submit(
+                fn=update_state,
+                inputs=[chatbot, chat_input],
+                outputs=[chatbot, chat_input],
+            )
+
+            bot_msg = chat_msg.then(  # noqa: F841
+                fn=bot, inputs=[chatbot], outputs=chatbot, api_name="bot_response"
+            )
+
+            chatbot.like(
+                fn=record_feedback,
+                inputs=None,
+                outputs=None,
+                like_user_message=True,
+            )
 
     return demo
 
