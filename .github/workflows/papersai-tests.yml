@@ -1,14 +1,14 @@
-name: "Build and Tests"
+name: "papersai tests"
 
 on:
   push:
     branches: [main]
     paths:
-      - "src/papersai/"
+      - "src/papersai/**"
   pull_request:
     branches: [main]
     paths:
-      - "src/papersai/"
+      - "src/papersai/**"
   release:
     types: [created]
   schedule:

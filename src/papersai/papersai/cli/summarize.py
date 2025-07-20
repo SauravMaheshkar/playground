@@ -1,9 +1,10 @@
-from papersai.cli.utils import init_parser
-from papersai.engine import Summarizer
-from papersai.utils import load_paper_as_context
 from rich.console import Console
 from rich.panel import Panel
 from rich.prompt import Prompt
+
+from papersai.cli.utils import init_parser
+from papersai.engine import Summarizer
+from papersai.utils import load_paper_as_context
 
 
 def summarize_cli() -> None:
