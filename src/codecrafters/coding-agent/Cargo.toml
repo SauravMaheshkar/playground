@@ -1,0 +1,12 @@
+[package]
+name = "coding-agent"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.93"
+
+[dependencies]
+tokio = { version = "1", features = ["macros", "rt-multi-thread", "process"] }
+async-openai = { version = "=0.32.4", features = ["byot", "chat-completion"] }
+clap = { version = "4.3.14", features = ["derive"] }
+serde_json = "1.0.149"
+dotenv = "0.15"
